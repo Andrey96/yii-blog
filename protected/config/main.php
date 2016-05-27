@@ -7,8 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Блог',
-    'sourceLanguage'=>'ru_ru',
+	'name'=>'Blog',
+	'sourceLanguage'=>'ru_ru',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -43,7 +43,7 @@ return array(
 		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-            'showScriptName'=>false,
+			'showScriptName'=>false,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -51,11 +51,17 @@ return array(
 			),
 		),
 		
-        'format' => array( 'class' => 'CLocalizedFormatter', ),
+		'format' => array( 'class' => 'CLocalizedFormatter', ),
 
 		// database settings are configured in database.php
 		'db'=>require(dirname(__FILE__).'/database.php'),
-
+		
+		'userProtector'=>array(
+			'class'=>'UserProtector',
+			'maxTries'=>3,
+			'delay'=>300,
+		),
+		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>YII_DEBUG ? null : 'site/error',

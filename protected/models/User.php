@@ -27,10 +27,7 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, email', 'required'),
-			array('username, email', 'length', 'max'=>32),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
+			//Эта модель не получает данные от пользователя, используется LoginForm и RegisterForm
 			array('id, username, email', 'safe', 'on'=>'search'),
 		);
 	}
@@ -44,6 +41,7 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'posts' => array(self::HAS_MANY, 'Post', 'authorID'),
+			'auth' => array(self::HAS_ONE, 'Auth', 'userID'), //Используется компонентом UserProtector
 		);
 	}
 
@@ -55,7 +53,7 @@ class User extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'username' => 'Username',
-			'passhash' => 'Passhash',
+			'passhash' => 'Password hash',
 			'email' => 'Email',
 		);
 	}

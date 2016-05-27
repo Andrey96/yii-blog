@@ -34,7 +34,7 @@ class Post extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('title, content', 'required'),
-            array('preview', 'length', 'max'=>512), //Я понимаю, что длина может быть любой, но хочу 512 и 128
+			array('preview', 'length', 'max'=>512), //Я понимаю, что длина может быть любой, но хочу 512 и 128
 			array('title', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -61,7 +61,7 @@ class Post extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'authorID' => 'AuthorID',
+			'authorID' => 'Author ID',
 			'created' => 'Created',
 			'edited' => 'Edited',
 			'title' => 'Title',

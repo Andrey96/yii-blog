@@ -17,17 +17,29 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$users=array(
-			// username => password
-			'demo'=>'demo',
-			'admin'=>'admin',
-		);
-		if(!isset($users[$this->username]))
+		$user = User::model()->with('auth')->findByAttributes(array('username'=>$this->username));
+		if ($user===null)
+		{
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		elseif($users[$this->username]!==$this->password)
-			$this->errorCode=self::ERROR_PASSWORD_INVALID;
+			$this->errorMessage='User not found';
+		}
 		else
-			$this->errorCode=self::ERROR_NONE;
+		{
+			$wait = Yii::app()->userProtector->tryToLogin($user);
+			if ($wait)
+			{
+				$this->errorCode=3;
+				$this->errorMessage="Login disabled for this account for next $wait seconds.";
+			}
+			else if (!CPasswordHelper::verifyPassword($this->password,$user->passhash))
+			{
+				$this->errorCode=self::ERROR_PASSWORD_INVALID;
+				$this->errorMessage='Incorrect password';
+				Yii::app()->userProtector->loginFailed($user);
+			}
+			else
+				$this->errorCode=self::ERROR_NONE;
+		}
 		return !$this->errorCode;
 	}
 }
