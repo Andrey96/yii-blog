@@ -90,7 +90,7 @@ class SiteController extends Controller
 			if($model->validate() && $model->register())
 				$this->redirect('/site/login');
 		}
-		// display the login form
+		// display the register form
 		$this->render('register',array('model'=>$model));
 	}
 

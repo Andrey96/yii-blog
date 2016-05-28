@@ -20,7 +20,7 @@ class RegisterForm extends CFormModel
 	{
 		return array(
 			array('username, email, password, passRepeat', 'required'),
-			array('username', 'match', 'pattern'=>'/^[a-zA-Zà-ÿÀ-ß0-9_]{3,64}$/', 'message'=>'Username must contain only letters, digits, underscore and be 3 to 64 symbols long.'),
+			array('username', 'match', 'pattern'=>'/^[a-zÐ°-Ñ0-9_]{3,64}$/i', 'message'=>'Username must contain only letters, digits, underscore and be 3 to 64 symbols long.'),
 			array('email', 'length', 'max'=>64),
 			array('email', 'email'),
 			array('username, email', 'unique', 'className' => 'User'),
